@@ -1,8 +1,9 @@
 // importing express
 const express = require('express');
 
-// import notes
-const { notes, currentDate } = require('../data');
+// import routes
+const noteRoutes = require('./routes/notes');
+const authRoutes = require('./routes/auth');
 
 // we are creating an instance of express
 const app = express();
@@ -24,47 +25,9 @@ app.get('/', (req, res) => {
     `);
 });
 
-// route for getting notes
-app.get('/notes', (req, res) => {
-  // fetch data
-  return res.status(200).json({
-    message: 'Notes successfully retrieved',
-    data: notes
-  });
-});
-
-// route for getting a single note by id
-app.get('/notes/:id', (req, res) => {
-  const { id } = req.params;
-  const note = notes.find((note) => note.id === parseInt(id));
-  if (!note) {
-    return res.status(404).json({
-      message: `Note of id: ${id} was not found`
-    });
-  }
-  return res.status(200).json({
-    message: 'Note found successfully',
-    data: note
-  });
-});
-
-// route for creating a note
-app.post('/notes', (req, res) => {
-  const { title } = req.body;
-
-  const newNote = {
-    id: notes.length + 1,
-    title,
-    created: currentDate
-  };
-
-  notes.push(newNote);
-  return res.status(201).json({
-    message: 'Note created created successfully',
-    data: notes
-  });
-
-});
+// routes
+app.use('/v1', noteRoutes);
+app.use('/v1', authRoutes);
 
 // listen to the server
 app.listen(port, () => {
