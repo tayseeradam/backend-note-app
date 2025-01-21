@@ -1,9 +1,17 @@
 // importing express
 const express = require('express');
+// importing dotenv
+const dotenv = require('dotenv');
+
+// configure dotenv
+dotenv.config();
 
 // import routes
 const noteRoutes = require('./routes/notes');
 const authRoutes = require('./routes/auth');
+
+// import db
+const dbConnection = require('./database/config');
 
 // we are creating an instance of express
 const app = express();
@@ -30,6 +38,9 @@ app.use('/v1', noteRoutes);
 app.use('/v1', authRoutes);
 
 // listen to the server
-app.listen(port, () => {
+app.listen(port, async () => {
+  // connect your db
+  await dbConnection();
   console.log(`Server is running at http://${hostname}:${port}`);
+  console.log('DB connected successfully')
 });

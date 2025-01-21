@@ -11,7 +11,7 @@ const deleteNoteController = require('../controllers/notes/deleteNote');
 // create a router instance
 const router = express.Router();
 
-// Get notes route
+// Get notes route 
 router.get('/notes', getNotesController);
 
 // Get note route
