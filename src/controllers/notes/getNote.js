@@ -1,17 +1,35 @@
-const getNotes = require("./getNotes");
+const Note = require('../../database/models/note');
 
-const getNote = (req, res) => {
+const getNote = async (req, res) => {
   const { id } = req.params;
-  const note = getNotes.find((note) => note.id === parseInt(id));
-  if (!note) {
-    return res.status(404).json({
-      message: `Note of id: ${id} was not found`
+
+  if (!id) {
+    return res.status(400).json({
+      ok: false,
+      message: 'Note ID is required',
     });
   }
-  return res.status(200).json({
-    message: 'Note found successfully',
-    data: note
-  });
+
+  try {
+    const note = await Note.findById(id);
+
+    if (!note) {
+      return res.status(404).json({
+        ok: false,
+        message: 'Note not found',
+      });
+    }
+
+    res.status(200).json({
+      ok: true,
+      data: note,
+    });
+  } catch (error) {
+    res.status(400).json({
+      ok: false,
+      message: 'Invalid Note ID',
+    });
+  }
 };
 
 module.exports = getNote;

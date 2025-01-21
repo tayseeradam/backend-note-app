@@ -37,10 +37,9 @@ app.get('/', (req, res) => {
 app.use('/v1', noteRoutes);
 app.use('/v1', authRoutes);
 
+dbConnection();
+
 // listen to the server
 app.listen(port, async () => {
-  // connect your db
-  await dbConnection();
   console.log(`Server is running at http://${hostname}:${port}`);
-  console.log('DB connected successfully')
 });

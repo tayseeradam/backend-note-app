@@ -1,23 +1,30 @@
-const getNotes = require("./getNotes");
+const Note = require('../../database/models/note');
 
 const createNote = async (req, res) => {
-  try {
-    const { title } = req.body;
+  const { title, content } = req.body;
 
-    const newNote = {
-      id: getNotes.length + 1,
-      title,
-      created: currentDate
-    };
-
-    await notes.push(newNote);
-    return res.status(201).json({
-      message: 'Note created created successfully',
-      data: notes
+  if (!title || !content) {
+    return res.status(400).json({
+      ok: false,
+      message: 'Title and content are required',
     });
+  }
 
+  try {
+    const note = new Note({ title, content });
+    const savedNote = await note.save();
+
+    res.status(201).json({
+      ok: true,
+      message: 'Note created successfully',
+      data: savedNote,
+    });
   } catch (error) {
-    console.log(error.message);
+    console.log(error)
+    res.status(500).json({
+      ok: false,
+      message: 'Error creating note',
+    });
   }
 };
 
