@@ -21,6 +21,6 @@ These are packages that should be installed a long
 1. dotenv: for retrieving items from `.env `
 2. mongoose: this is an ODM (Object Document Model) - It provides us with methods that replaces pure queries.
 
-## Models
+## Schemas & Models
 1. Schema: This is a design/blueprint of your data structure
 2. Model: this is an actual object for your schema

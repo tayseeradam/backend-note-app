@@ -8,6 +8,7 @@ dotenv.config();
 
 // import routes
 const noteRoutes = require('./routes/notes');
+const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
 
 // import db
@@ -35,6 +36,7 @@ app.get('/', (req, res) => {
 
 // routes
 app.use('/v1', noteRoutes);
+app.use('/v1', userRoutes);
 app.use('/v1', authRoutes);
 
 dbConnection();
