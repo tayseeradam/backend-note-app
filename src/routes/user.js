@@ -18,7 +18,7 @@ router.get('/users', isAuthenticated, getUsersController);
 router.get('/users/:userId', isAuthenticated, getUserController);
 
 // Create a user route
-router.post('/users', isAuthenticated, createUserController);
+router.post('/users', createUserController);
 
 
 module.exports = router;
